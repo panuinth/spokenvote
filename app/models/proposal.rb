@@ -15,7 +15,7 @@
 
 class Proposal < ActiveRecord::Base
   attr_accessible :statement, :supporting_statement, :user_id, :user, :supporting_votes, :hub_id, :hub,
-                  :vote, :vote_attributes, :votes, :votes_attributes, :parent
+    :vote, :vote_attributes, :votes, :votes_attributes, :parent
 
   # Associations
   belongs_to :user
@@ -49,15 +49,15 @@ class Proposal < ActiveRecord::Base
       all_proposals_in_tree.sort! { |p1, p2| p1.votes_count <=> p2.votes_count }
     end
   end
-  
+
   def supporting_statement
     votes.where(user_id: self.user_id).first.comment
   end
-  
+
   def supporting_votes
     votes.where("user_id != ?", self.user_id).order("created_at DESC")
   end
-  
+
   def editable?(current_user)
     current_user && votes_count < 2 && user_id == current_user.id
   end
@@ -69,4 +69,25 @@ class Proposal < ActiveRecord::Base
   def votes_percentage
     sprintf('%d%%', (100.0 * (self.votes.size.to_f / self.votes_in_tree)).round)
   end
+
+  def previous_proposal_id
+    proposals = Proposal.roots.order('votes_count DESC').map(&:id)
+    previous_index = '';
+    proposals.each_with_index do |item,index|
+      previous_index = index - 1 if item==self.id
+    end
+    previous_index == -1 ? proposal_id = false : proposal_id = proposals[previous_index]
+    return proposal_id
+  end
+
+  def next_proposal_id
+    proposals = Proposal.roots.order('votes_count DESC').map(&:id)
+    next_index = '';
+    proposals.each_with_index do |item,index|
+      next_index = index + 1 if item==self.id
+    end
+    next_index == proposals.length ? proposal_id = false : proposal_id = proposals[next_index]
+    return proposal_id
+  end
+
 end

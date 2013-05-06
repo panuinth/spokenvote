@@ -33,7 +33,7 @@ gem 'omniauth-google-oauth2'
 # Other
 gem 'ancestry'
 gem 'version_fu'
-gem 'activerecord-reputation-system', require: 'reputation_system'
+#gem 'activerecord-reputation-system', require: 'reputation_system'
 gem 'rabl'
 
 # Gems used only for assets and not required

@@ -368,4 +368,22 @@ textarea { height: 100px; }
   color: #325c99;
   float: right;
 }
+.nav-proposal {
+  a {
+    color:#fff;
+    background-image: linear-gradient(#60c060, #52a552);
+    border: 1px solid #52a552;
+    color: #ffffff;
+    font-size:11px;
+    padding: 2px 8px;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 2px;
+  }
+  a:hover{
+    text-decoration:none;
+  }
+  a:first-child{
+    margin-right:2px;
+  }
+}
 // end Proposal-related

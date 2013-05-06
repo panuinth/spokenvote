@@ -14,6 +14,14 @@ node :related_proposals do |proposal|
   partial('proposals/_show_related_proposals', object: proposal.related_proposals)
 end
 
+node :previous_proposal do |proposal|
+  proposal.previous_proposal_id
+end
+
+node :next_proposal do |proposal|
+  proposal.next_proposal_id
+end
+
 child :user do
   attributes :id, :email, :name
 end
@@ -25,3 +33,5 @@ end
 child :votes do
   attributes :id, :comment, :username, :created_at, :user_id
 end
+
+
